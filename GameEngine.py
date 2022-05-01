@@ -140,6 +140,31 @@ class GameState(GameEngine):
                 
             return possible_moves
 
+        def king_move(self, og_row, og_col, row, col):
+            # Check if the move is a valid king move
+            possible_moves = []
+            # Check if the move is a valid king move
+            if row == og_row:
+                if col > og_col:
+                    possible_moves.append((row,col))
+                else:
+                    possible_moves.append((row,col))
+            elif col == og_col:
+                if row > og_row:
+                    possible_moves.append((row,col))
+                else:
+                    possible_moves.append((row,col))
+            else:
+                if row > og_row and col > og_col:
+                    possible_moves.append((row,col))
+                elif row > og_row and col < og_col:
+                    possible_moves.append((row,col))
+                elif row < og_row and col > og_col:
+                    possible_moves.append((row,col))
+                elif row < og_row and col < og_col:
+                    possible_moves.append((row,col))
+            return possible_moves
+
         def get_item_from_board(self, row, col):
             return self.board[row][col]
 
@@ -303,7 +328,19 @@ class GameState(GameEngine):
                     print("You cannot move through more than one enemy piece!")
                     return False
 
-
+            if piece[:1] == "K":
+                # Check if the king is moving more than 1 space
+                if abs(row - og_row) > 1 or abs(col - og_col) > 1:
+                    print("You cannot move a king more than one space!")
+                    return False
+                # Check if the king is moving into a space that is not empty
+                if dying_piece != "  ":
+                    print("You cannot move into a space that is not empty!")
+                    return False
+                # Check if the king is moving into a space that is not empty
+                if (row,col) not in self.king_move(og_row, og_col, row, col):
+                    print("You cannot move a king that way!")
+                    return False
 
             return True
 
