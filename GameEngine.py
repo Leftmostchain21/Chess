@@ -78,38 +78,65 @@ class GameState(GameEngine):
             # Check if the move is a valid bishop move
             possible_moves = []
             not_at_destination = True
-            # Check in the vector direction of the bishop
-            if row > og_row and col > og_col:
-                while not_at_destination:
-                    possible_moves.append((row,col))
-                    row -= 1
-                    col -= 1
-                    if row == og_row and col == og_col:
-                        not_at_destination = False
+            # Check in the vector direction of the queen
+            if row == og_row:
+                if col > og_col:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        col -= 1
+                        if col == og_col:
+                            not_at_destination = False
+                else:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        col += 1
+                        if col == og_col:
+                            not_at_destination = False            
+            if col == og_col:
+                if row > og_row:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        row -= 1
+                        if row == og_row:
+                            not_at_destination = False
+                else:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        row += 1
+                        if row == og_row:
+                            not_at_destination = False
+            else:
+                if row > og_row and col > og_col:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        row -= 1
+                        col -= 1
+                        if row == og_row and col == og_col:
+                            not_at_destination = False
 
-            elif row > og_row and col < og_col:
-                while not_at_destination:
-                    possible_moves.append((row,col))
-                    row -= 1
-                    col += 1
-                    if row == og_row and col == og_col:
-                        not_at_destination = False
-            
-            elif row < og_row and col > og_col:
-                while not_at_destination:
-                    possible_moves.append((row,col))
-                    row += 1
-                    col -= 1
-                    if row == og_row and col == og_col:
-                        not_at_destination = False
-            
-            elif row < og_row and col < og_col:
-                while not_at_destination:
-                    possible_moves.append((row,col))
-                    row += 1
-                    col += 1
-                    if row == og_row and col == og_col:
-                        not_at_destination = False
+                elif row > og_row and col < og_col:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        row -= 1
+                        col += 1
+                        if row == og_row and col == og_col:
+                            not_at_destination = False
+                
+                elif row < og_row and col > og_col:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        row += 1
+                        col -= 1
+                        if row == og_row and col == og_col:
+                            not_at_destination = False
+                
+                elif row < og_row and col < og_col:
+                    while not_at_destination:
+                        possible_moves.append((row,col))
+                        row += 1
+                        col += 1
+                        if row == og_row and col == og_col:
+                            not_at_destination = False
                 
             return possible_moves
 
@@ -270,11 +297,12 @@ class GameState(GameEngine):
                             print("You cannot move through a piece of the same color!")
                             return False                        
                         # Check if the player has gone through an enemy piece
-                        if self.get_item_from_board(possible_row, possible_col)[-1:] != piece[-1:] and self.get_item_from_board(possible_row, possible_col) != "  ":
-                            total_hit_enemy_pieces += 1
+                    if self.get_item_from_board(possible_row, possible_col)[-1:] != piece[-1:] and self.get_item_from_board(possible_row, possible_col) != "  ":
+                        total_hit_enemy_pieces += 1
                 if total_hit_enemy_pieces > 1:
                     print("You cannot move through more than one enemy piece!")
                     return False
+
 
 
             return True
