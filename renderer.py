@@ -36,6 +36,7 @@ def draw_board():
                 pygame.draw.rect(surface, RED, (row * WIDTH / 8, col * HEIGHT / 8, WIDTH / 8, HEIGHT / 8))
             else:
                 pygame.draw.rect(surface, GREEN, (row * WIDTH / 8, col * HEIGHT / 8, WIDTH / 8, HEIGHT / 8))
+    pygame.display.update()
 
 def draw_pieces(board):
     surface = pygame.display.set_mode((WIDTH, HEIGHT))
