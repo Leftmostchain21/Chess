@@ -19,17 +19,17 @@ def main():
     renderer.draw_board()
     renderer.load_Images()
     while True:
-        renderer.draw_pieces(boardy.get_board())
         if boardy.turn == "w":
             print("White's turn")
             move_is_invalid = True
             while move_is_invalid:
-                moving_piece = input("Enter the piece you want to move in the style of (x,x) with a comma: ")
-                destination = input("Enter the destination in the style of (x,x) with a comma: ")
-                moving_piece_row = int(moving_piece.split(",")[0])-1
-                moving_piece_col = int(moving_piece.split(",")[1])-1
-                destination_row = int(destination.split(",")[0])-1
-                destination_col = int(destination.split(",")[1])-1
+                renderer.draw_board()
+                renderer.draw_pieces(boardy.get_board())
+                moving_piece = renderer.get_events()
+                moving_piece_row = moving_piece[0][0]
+                moving_piece_col = moving_piece[0][1]
+                destination_row = moving_piece[1][0]
+                destination_col = moving_piece[1][1]
                 # Dectect if the values are between 1 and 8 inclusive
                 if (moving_piece_row >= 0 and moving_piece_row <= 7) and (moving_piece_col >= 0 and moving_piece_col <= 7) and (destination_row >= 0 and destination_row <= 7) and (destination_col >= 0 and destination_col <= 7):
                     if boardy.is_move_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
@@ -44,12 +44,13 @@ def main():
             print("Black's turn")
             move_is_invalid = True
             while move_is_invalid:
-                moving_piece = input("Enter the piece you want to move in the style of (x,x) with a comma: ")
-                destination = input("Enter the destination in the style of (x,x) with a comma: ")
-                moving_piece_row = int(moving_piece.split(",")[0])-1
-                moving_piece_col = int(moving_piece.split(",")[1])-1
-                destination_row = int(destination.split(",")[0])-1
-                destination_col = int(destination.split(",")[1])-1
+                renderer.draw_board()
+                renderer.draw_pieces(boardy.get_board())
+                moving_piece = renderer.get_events()
+                moving_piece_row = moving_piece[0][0]
+                moving_piece_col = moving_piece[0][1]
+                destination_row = moving_piece[1][0]
+                destination_col = moving_piece[1][1]                
                 if (moving_piece_row >= 0 and moving_piece_row <= 7) and (moving_piece_col >= 0 and moving_piece_col <= 7) and (destination_row >= 0 and destination_row <= 7) and (destination_col >= 0 and destination_col <= 7):
                     if boardy.is_move_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
                         move_is_invalid = False

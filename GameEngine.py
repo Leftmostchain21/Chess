@@ -15,8 +15,8 @@ class GameState(GameEngine):
             ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
             ["  ","  ","  ","  ","  ","  ","  ","  "],
             ["  ","  ","  ","  ","  ","  ","  ","  "],
-            ["  ","  ","  ","  ","Bw","  ","  ","  "],
-            ["  ","  ","  ","  ","  ","  ","Bw","  "],
+            ["  ","  ","  ","  ","  ","  ","  ","  "],
+            ["  ","  ","  ","  ","  ","  ","  ","  "],
             ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
             ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
             self.turn = "w"
@@ -143,6 +143,9 @@ class GameState(GameEngine):
                     if og_row <= row:
                         print("You cannot move a piece backwards!")
                         return False
+                    if dying_piece != "  " and og_col == col:
+                        print("You cannot move into a space that is not empty!")
+                        return False
                     # Check if the pawn is moving more than two spaces at the beginning
                     if og_row == 6 and og_row - row > 2:
                         print("You cannot move a pawn more than two spaces at the beginning!")
@@ -164,10 +167,12 @@ class GameState(GameEngine):
                     if og_row != 1 and row - og_row > 1:
                         print("You cannot move a pawn more than one space after the first move!")
                         return False
-
-                if og_col != col:
-                    print("You cannot move a pawn diagonally!")
-                    return False
+                    
+                # If the pawn is moving diagonal 1 space, check if the space is empty
+                if og_col != col and abs(row - og_row) == 1:
+                    if dying_piece == "  ":
+                        print("You cannot move into a space that is not empty!")
+                        return False
 
             if piece[:1] == "R":
                 if og_row != row and og_col != col:
@@ -244,9 +249,10 @@ class GameState(GameEngine):
             if piece[:1] == "Q":
                 total_hit_enemy_pieces = 0
                 # Check if the bishop is moving diagonally
-                for possible_move in self.bishop_move(og_row, og_col, row, col):
+                for possible_move in self.queen_move(og_row, og_col, row, col):
                     possible_row = possible_move[0]
                     possible_col = possible_move[1]
+                    print(possible_row, possible_col)
                     if possible_row != og_row and possible_col != og_col:
                         # Check if the piece is a piece of the same color
                         if self.get_item_from_board(possible_row, possible_col)[-1:] == piece[-1:]:
