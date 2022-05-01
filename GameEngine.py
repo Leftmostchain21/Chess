@@ -154,10 +154,17 @@ class GameState(GameEngine):
                     if og_row != 6 and og_row - row > 1:
                         print("You cannot move a pawn more than one space after the first move!")
                         return False
+                    # If the pawn is is moving more than 1 in both directions, return false, but it must account for the first move of potencially 2 places
+                    if (abs(row - og_row) > 1 and abs(col - og_col) > 1) and og_row == 6:
+                        print("You cannot move more than one space in both directions!")
+                        return False 
 
                 if piece[-1:] == "b":
                     if og_row >= row:
                         print("You cannot move a piece backwards!")
+                        return False
+                    if dying_piece != "  " and og_col == col:
+                        print("You cannot move into a space that is not empty!")
                         return False
                     # Check if the pawn is moving more than two spaces at the beginning
                     if og_row == 1 and row - og_row > 2:
@@ -167,12 +174,16 @@ class GameState(GameEngine):
                     if og_row != 1 and row - og_row > 1:
                         print("You cannot move a pawn more than one space after the first move!")
                         return False
+                    # If the pawn is is moving more than 1 in both directions, return false, but it must account for the first move of potencially 2 places
+                    if (abs(row - og_row) > 1 and abs(col - og_col) > 1) and og_row == 1:
+                        print("You cannot move more than one space in both directions!")
+                        return False  
                     
                 # If the pawn is moving diagonal 1 space, check if the space is empty
                 if og_col != col and abs(row - og_row) == 1:
                     if dying_piece == "  ":
                         print("You cannot move into a space that is not empty!")
-                        return False
+                        return False         
 
             if piece[:1] == "R":
                 if og_row != row and og_col != col:
