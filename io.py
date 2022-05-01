@@ -33,6 +33,8 @@ def main():
                 # Dectect if the values are between 1 and 8 inclusive
                 if (moving_piece_row >= 0 and moving_piece_row <= 7) and (moving_piece_col >= 0 and moving_piece_col <= 7) and (destination_row >= 0 and destination_row <= 7) and (destination_col >= 0 and destination_col <= 7):
                     if boardy.is_move_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
+                        if boardy.get_item_from_board(moving_piece_row, moving_piece_col) == "Kw":
+                            boardy.king_location_w = destination_row, destination_col
                         move_is_invalid = False
                 else:
                     print("Invalid move. Try again.")
@@ -53,6 +55,8 @@ def main():
                 destination_col = moving_piece[1][1]                
                 if (moving_piece_row >= 0 and moving_piece_row <= 7) and (moving_piece_col >= 0 and moving_piece_col <= 7) and (destination_row >= 0 and destination_row <= 7) and (destination_col >= 0 and destination_col <= 7):
                     if boardy.is_move_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
+                        if boardy.get_item_from_board(moving_piece_row, moving_piece_col) == "Kb":
+                            boardy.king_location_w = destination_row, destination_col
                         move_is_invalid = False
                 else:
                     print("Invalid move. Try again.")

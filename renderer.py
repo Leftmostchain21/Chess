@@ -33,6 +33,7 @@ def load_Images():
         IMAGES[piece] = pygame.transform.scale(image_loading, (WIDTH / 8, HEIGHT / 8))
     # We can now access an image by saying 'IMAGES['Pw']'
 
+
 def get_events():
     clicked_square = ()
     player_squares = []
