@@ -16,7 +16,7 @@ def print_board(board):
 
 def main():
     print_board(boardy.get_board())
-    renderer.draw_board(boardy.get_board())
+    renderer.draw_board()
     while True:
         if boardy.turn == "w":
             print("White's turn")

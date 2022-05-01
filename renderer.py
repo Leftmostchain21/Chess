@@ -26,7 +26,7 @@ def loadImages():
         IMAGES[piece] = pygame.transform.scale(pygame.image.load("Chess_Working/images/" + piece + ".png"), (WIDTH / 8, HEIGHT / 8))
     # We can now access an image by saying 'IMAGES['wp']'
 
-def draw_board(board):
+def draw_board():
     pygame.init()
     surface = pygame.display.set_mode((WIDTH, HEIGHT))
     # Draw the board
