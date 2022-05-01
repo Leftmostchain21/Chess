@@ -17,7 +17,9 @@ def print_board(board):
 def main():
     print_board(boardy.get_board())
     renderer.draw_board()
+    renderer.load_Images()
     while True:
+        renderer.draw_pieces(boardy.get_board())
         if boardy.turn == "w":
             print("White's turn")
             move_is_invalid = True
