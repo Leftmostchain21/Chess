@@ -263,7 +263,6 @@ class GameState(GameEngine):
         return possible_moves
 
     def get_item_from_board(self, row, col):
-        print(row, col)
         return self.board[row][col]
 
     def alternate_move(self):
@@ -274,22 +273,30 @@ class GameState(GameEngine):
 
     def is_move_valid(self, og_row, og_col, row, col):
         piece = self.get_item_from_board(og_row, og_col)
+        copy_of_row = row
+        copy_of_col = col
         dying_piece = self.get_item_from_board(row, col)
         # Check if the move is valid
-        print(self.is_in_check(self.king_location_w[0], self.king_location_w[1]))
         if self.turn == "w":
             attacking_possible_moves = self.is_in_check(self.king_location_w[0], self.king_location_w[1])
             for attempts in range(0, len(attacking_possible_moves)):
-                row = attacking_possible_moves[attempts][0]
-                col = attacking_possible_moves[attempts][1]
+                row = attacking_possible_moves[attempts][0][0]
+                col = attacking_possible_moves[attempts][0][1]
                 print(row, col)
                 if piece[-1:] != self.turn and self.get_item_from_board(row,col)[-1:] != " ":
                     print("You are in check!")
                     return False
         if self.turn == "b":
-            if self.king_location_b in self.is_in_check(self.king_location_b[0], self.king_location_b[1]):
-                print("You cannot move into check!")
-                return False
+            attacking_possible_moves = self.is_in_check(self.king_location_b[0], self.king_location_b[1])
+            for attempts in range(0, len(attacking_possible_moves)):
+                row = attacking_possible_moves[attempts][0][0]
+                col = attacking_possible_moves[attempts][0][1]
+                print(row, col)
+                if piece[-1:] != self.turn and self.get_item_from_board(row,col)[-1:] != " ":
+                    print("You are in check!")
+                    return False
+        row = copy_of_row
+        col = copy_of_col
         if piece[-1:] == dying_piece[-1:]:
             print("You cannot move a piece to the same color!")
             return False
@@ -418,3 +425,10 @@ class GameState(GameEngine):
         self.board[og_row][og_col] = "  "
         
         self.alternate_move()
+
+    def temp_board(self, og_row, og_col, row, col):
+        # Create a temporary board to test the move
+        self.temp_board = []
+        # Update the board with the new move
+        self.board[row][col] = self.get_item_from_board(og_row,og_col)
+        self.board[og_row][og_col] = "  "

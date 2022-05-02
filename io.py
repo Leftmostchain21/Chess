@@ -30,14 +30,31 @@ def main():
                 moving_piece_col = moving_piece[0][1]
                 destination_row = moving_piece[1][0]
                 destination_col = moving_piece[1][1]
-                # Dectect if the values are between 1 and 8 inclusive
-                if (moving_piece_row >= 0 and moving_piece_row <= 7) and (moving_piece_col >= 0 and moving_piece_col <= 7) and (destination_row >= 0 and destination_row <= 7) and (destination_col >= 0 and destination_col <= 7):
-                    if boardy.is_move_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
-                        if boardy.get_item_from_board(moving_piece_row, moving_piece_col) == "Kw":
-                            boardy.king_location_w = destination_row, destination_col
+                # First, are the coordinates valid?
+                if moving_piece_row < 1 or moving_piece_row > 8 or moving_piece_col < 1 or moving_piece_col > 8:
+                    boardy.update_temp_board(moving_piece_row, moving_piece_col, destination_row, destination_col)
+                    # Now - if they are in check, will the move put still leave them/put them in check?
+                    # Feed the is_in_check function the temporary board
+                    if boardy.is_in_check(boardy.temp_board):
+                        print("You cannot move into check")
+                    else:
+                        print("Valid move")
+                    if boardy.move_is_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
                         move_is_invalid = False
-                else:
-                    print("Invalid move. Try again.")
+                        boardy.update_board(moving_piece_row, moving_piece_col, destination_row, destination_col)
+                        boardy.temp_board = boardy.get_board()
+                        boardy.turn = "b"
+                        print_board(boardy.get_board())
+
+                # # Dectect if the values are between 1 and 8 inclusive
+                # if (moving_piece_row >= 0 and moving_piece_row <= 7) and (moving_piece_col >= 0 and moving_piece_col <= 7) and (destination_row >= 0 and destination_row <= 7) and (destination_col >= 0 and destination_col <= 7):
+                #     boardy.update_temp_board(moving_piece_row, moving_piece_col, destination_row, destination_col)
+                #     if boardy.is_move_valid(moving_piece_row, moving_piece_col, destination_row, destination_col):
+                #         if boardy.get_item_from_board(moving_piece_row, moving_piece_col) == "Kw":
+                #             boardy.king_location_w = destination_row, destination_col
+                #         move_is_invalid = False
+                # else:
+                #     print("Invalid move. Try again.")
             boardy.update_board(moving_piece_row,moving_piece_col,destination_row,destination_col)
             print("----------------------------")
             boardy.turn = "b"
