@@ -31,7 +31,7 @@ def main():
                 destination_row = moving_piece[1][0]
                 destination_col = moving_piece[1][1]
                 # First, are the coordinates valid?
-                if moving_piece_row < 1 or moving_piece_row > 8 or moving_piece_col < 1 or moving_piece_col > 8:
+                if boardy.move_in_range(moving_piece_row, moving_piece_col, destination_row, destination_col):
                     boardy.update_temp_board(moving_piece_row, moving_piece_col, destination_row, destination_col)
                     # Now - if they are in check, will the move put still leave them/put them in check?
                     # Feed the is_in_check function the temporary board
