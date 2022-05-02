@@ -271,6 +271,16 @@ class GameState(GameEngine):
         else:
             self.turn = "w"
 
+    def move_in_range(self, og_row, og_col, row, col):
+        # Check if the move is in range of the board (0-7)
+        if row in range(0,8) and col in range(0,8):
+            if og_row in range(0,8) and og_col in range(0,8):
+                return True
+            else:
+                return False
+        else:
+            return False
+
     def is_move_valid(self, og_row, og_col, row, col):
         piece = self.get_item_from_board(og_row, og_col)
         copy_of_row = row
@@ -426,9 +436,12 @@ class GameState(GameEngine):
         
         self.alternate_move()
 
-    def temp_board(self, og_row, og_col, row, col):
+    def update_temp_board(self, og_row, og_col, row, col):
         # Create a temporary board to test the move
         self.temp_board = []
         # Update the board with the new move
         self.board[row][col] = self.get_item_from_board(og_row,og_col)
         self.board[og_row][og_col] = "  "
+    
+    def get_item_from_temp_board(self, row, col):
+        return self.temp_board[row][col]
